@@ -1,0 +1,22 @@
+{
+  "name": "slide-to-unlock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cccccccccccccccccnrd/slide-to-unlock.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cccccccccccccccccnrd/slide-to-unlock/issues"
+  },
+  "homepage": "https://github.com/cccccccccccccccccnrd/slide-to-unlock#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
