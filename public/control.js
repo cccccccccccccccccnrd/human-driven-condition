@@ -1,4 +1,4 @@
-import { WebGLRenderer, PerspectiveCamera, Scene, PointLight, CubeTextureLoader, MeshStandardMaterial, Color, Vector3 } from 'https://cdn.skypack.dev/three@0.128.0/build/three.module.js'
+import { WebGLRenderer, PerspectiveCamera, Scene, PointLight, CubeTextureLoader, Color } from 'https://cdn.skypack.dev/three@0.128.0/build/three.module.js'
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/GLTFLoader.js'
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/controls/OrbitControls.js'
 
@@ -26,9 +26,13 @@ const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableZoom = false
 controls.enablePan = false
 controls.autoRotate = true
-controls.autoRotateSpeed = 0.1
+controls.autoRotateSpeed = 0.2
 controls.target.set(0, 2, 0)
 controls.update()
+
+const pointLight = new PointLight('white', 50)
+pointLight.position.set(0, 5, 0)
+scene.add(pointLight)
 
 const env = new CubeTextureLoader().setPath('env/').load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg'])
 
@@ -53,41 +57,15 @@ loader.load(`rack-${ Math.random() < 0.5 ? '01' : '02' }.gltf`, (gltf) => {
       node.material.roughness = 0.25
       node.material.color = new Color(0xffffff)
       node.material.envMap = env
-      /* node.geometry.computeVertexNormals(true) */
-      /* node.material = new MeshStandardMaterial({
-        color: 'black',
-        metalness: 0,
-        roughness: 1,
-        wireframe: false
-      }) */
     }
-    /* if (node.type === 'Mesh') {
-      console.log(node.name)
-      if (node.name.includes('Phonee')) {
-        node.material = new MeshStandardMaterial({
-          color: 'black',
-          metalness: 0,
-          roughness: 0,
-          wireframe: true
-        })
-      } else {
-        node.material = new MeshStandardMaterial({
-          color: 0xffffff,
-          metalness: 1,
-          roughness: 0.1,
-          envMap: env
-        })
-      }
-    } */
   })
+
   render()
 }, undefined, (error) => {
 	console.error(error)
 })
 
 function render() {
-  /* camera.rotation.z += 0.0001 */
-  /* scrolls.forEach((s) => s.scrollTop += camera.rotation.z * 100 / 2) */
   renderer.render(scene, camera)
   controls.update()
   requestAnimationFrame(render)
