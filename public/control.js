@@ -1,4 +1,4 @@
-import { WebGLRenderer, PerspectiveCamera, Scene, PointLight, CubeTextureLoader, Color } from 'https://cdn.skypack.dev/three@0.128.0/build/three.module.js'
+import { WebGLRenderer, sRGBEncoding, PerspectiveCamera, Scene, PointLight, CubeTextureLoader, Color } from 'https://cdn.skypack.dev/three@0.128.0/build/three.module.js'
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/loaders/GLTFLoader.js'
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.128.0/examples/jsm/controls/OrbitControls.js'
 
@@ -13,7 +13,8 @@ const renderer = new WebGLRenderer({
   canvas,
   alpha: true,
   antialias: true,
-  logarithmicDepthBuffer: true
+  logarithmicDepthBuffer: true,
+  outputEncoding: sRGBEncoding
 })
 const scene = new Scene()
 
@@ -30,31 +31,28 @@ controls.autoRotateSpeed = 0.2
 controls.target.set(0, 2, 0)
 controls.update()
 
-const pointLight = new PointLight('white', 50)
-pointLight.position.set(0, 5, 0)
+const pointLight = new PointLight('rgb(200, 225, 255)', 10)
+pointLight.position.set(0, 10, 0)
 scene.add(pointLight)
 
-const env = new CubeTextureLoader().setPath('env/').load(['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg'])
+const env = new CubeTextureLoader().setPath('env/').load(['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png'])
 
-loader.load(`rack-${ Math.random() < 0.5 ? '01' : '02' }.gltf`, (gltf) => {
+loader.load('gcs-036-chair-min.gltf', (gltf) => {
   const root = gltf.scene
   scene.add(root)
   scene.traverse((node) => {
     console.log(node)
 
-    if (node.name === 'Rack') {
-      node.rotation.set(0, 0, 0)
-    }
-
-    if (node.name === 'mesh_0_1') {
+    if (node.name === 'mesh_0') {
+      node.material.metalness = 1
+      node.material.roughness = 0.2
+      node.material.color = new Color('rgb(170, 170, 170)')
+      node.material.envMap = env
+      /* node.material.flatShading = true
+      node.geometry.computeVertexNormals(true) */
+    } else if (node.name === 'mesh_0_1') {
       node.material.metalness = 1
       node.material.roughness = 0
-      node.material.envMap = env
-      node.material.flatShading = true
-      node.geometry.computeVertexNormals(true)
-    } else if (node.name === 'mesh_0') {
-      node.material.metalness = 1
-      node.material.roughness = 0.25
       node.material.color = new Color(0xffffff)
       node.material.envMap = env
     }
