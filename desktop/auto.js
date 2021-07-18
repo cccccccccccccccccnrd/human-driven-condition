@@ -215,12 +215,6 @@ async function cam () {
   await adb(8)
 }
 
-async function approach () {
-  await focus()
-  await page()
-  await script(2)
-}
-
 async function first () {
   await script(1)
 }
@@ -229,12 +223,7 @@ async function next () {
   await nextScript()
 }
 
-/* reload() */
-/* script(3) */
-/* unlock() */
-/* select() */
 robot.setMouseDelay(2)
-/* cam() */
 
 /* while (true) {
   const mouse = robot.getMousePos()
@@ -242,10 +231,9 @@ robot.setMouseDelay(2)
 } */
 
 module.exports = {
-  cam,
-  approach,
-  reset,
   unlock,
+  reset,
   first,
-  next
+  next,
+  cam
 }
