@@ -101,49 +101,73 @@ function sleep (ms) {
 }
 
 function focus () {
-  return new Promise((resolve) => {
+  return new Promise(async (resolve) => {
     robot.keyTap('command')
-    robot.moveMouseSmooth(TASKBAR_ICON.x, TASKBAR_ICON.y)
+    robot.moveMouse(TASKBAR_ICON.x, TASKBAR_ICON.y)
+    await sleep(500)
     robot.mouseClick()
     resolve()
   })
 }
 
 function reload () {
-  return new Promise((resolve) => {
-    robot.moveMouseSmooth(SHOW_SCRIPTS_BUTTON.x, SHOW_SCRIPTS_BUTTON.y)
+  return new Promise(async (resolve) => {
+    robot.moveMouse(SHOW_SCRIPTS_BUTTON.x, SHOW_SCRIPTS_BUTTON.y)
+    await sleep(500)
     robot.mouseClick()
-    robot.moveMouseSmooth(RELOAD_SCRIPTS_BUTTON.x, RELOAD_SCRIPTS_BUTTON.y)
+    robot.moveMouse(RELOAD_SCRIPTS_BUTTON.x, RELOAD_SCRIPTS_BUTTON.y)
+    await sleep(500)
     robot.mouseClick()
-    robot.moveMouseSmooth(CLOSE_SCRIPTS_BUTTON.x, CLOSE_SCRIPTS_BUTTON.y)
+    robot.moveMouse(CLOSE_SCRIPTS_BUTTON.x, CLOSE_SCRIPTS_BUTTON.y)
+    await sleep(500)
     robot.mouseClick()
     resolve()
   })
 }
 
 function script (number) {
-  return new Promise((resolve) => {
-    robot.moveMouseSmooth(CHOOSE_SCRIPT_BUTTON.x, CHOOSE_SCRIPT_BUTTON.y)
+  return new Promise(async (resolve) => {
+    robot.moveMouse(CHOOSE_SCRIPT_BUTTON.x, CHOOSE_SCRIPT_BUTTON.y)
+    await sleep(500)
     robot.mouseClick()
-    robot.moveMouseSmooth(SCRIPT_BUTTONS[number].x, SCRIPT_BUTTONS[number].y)
+    robot.moveMouse(SCRIPT_BUTTONS[number].x, SCRIPT_BUTTONS[number].y)
+    await sleep(500)
     robot.mouseClick()
-    robot.moveMouseSmooth(EXEC_SCRIPT_BUTTON.x, EXEC_SCRIPT_BUTTON.y)
+    robot.moveMouse(EXEC_SCRIPT_BUTTON.x, EXEC_SCRIPT_BUTTON.y)
+    await sleep(500)
+    robot.mouseClick()
+    resolve()
+  })
+}
+
+function nextScript () {
+  return new Promise(async (resolve) => {
+    robot.moveMouse(CHOOSE_SCRIPT_BUTTON.x, CHOOSE_SCRIPT_BUTTON.y)
+    await sleep(500)
+    robot.mouseClick()
+    robot.keyTap('down')
+    await sleep(500)
+    robot.mouseClick()
+    robot.moveMouse(EXEC_SCRIPT_BUTTON.x, EXEC_SCRIPT_BUTTON.y)
+    await sleep(500)
     robot.mouseClick()
     resolve()
   })
 }
 
 function adb (number) {
-  return new Promise((resolve) => {
-    robot.moveMouseSmooth(ADB_BUTTONS[number].x, ADB_BUTTONS[number].y)
+  return new Promise(async (resolve) => {
+    robot.moveMouse(ADB_BUTTONS[number].x, ADB_BUTTONS[number].y)
+    await sleep(1000)
     robot.mouseClick()
     resolve()
   })
 }
 
 function selectAll () {
-  return new Promise((resolve) => {
-    robot.moveMouseSmooth(245, 680)
+  return new Promise(async (resolve) => {
+    robot.moveMouse(245, 680)
+    await sleep(250)
     robot.mouseToggle('down')
     robot.dragMouse(20, 615)
     robot.mouseToggle('up')
@@ -152,46 +176,57 @@ function selectAll () {
 }
 
 function stop () {
-  return new Promise((resolve) => {
-    robot.moveMouseSmooth(20, 615)
+  return new Promise(async (resolve) => {
+    robot.moveMouse(20, 615)
+    await sleep(250)
     robot.mouseClick('right')
-    robot.moveMouseSmooth(40, 780)
+    robot.moveMouse(40, 780)
+    await sleep(250)
     robot.mouseClick()
     resolve()
   })
 }
 
 async function unlock () {
+  await focus()
   await adb(1)
   await sleep(3000)
   await adb(4)
   await sleep(1000)
+  await page()
 }
 
 async function page () {
   await adb(7)
-  await sleep(1000)
   await adb(7)
-  await sleep(2000)
   await adb(6)
-  await sleep(1000)
 }
 
-async function start ()  {
+async function reset ()  {
   await focus()
-  await unlock()
-  await page()
-  await script(2)
-  await sleep(20000)
-  await stop()
-  await page()
+  await adb(8)
+  await adb(8)
+  await adb(7)
 }
 
 async function cam () {
-  console.log('wow it worked')
-  /* await focus()
+  await focus()
   await unlock()
-  await adb(8) */
+  await adb(8)
+}
+
+async function approach () {
+  await focus()
+  await page()
+  await script(2)
+}
+
+async function first () {
+  await script(1)
+}
+
+async function next () {
+  await nextScript()
 }
 
 /* reload() */
@@ -207,5 +242,10 @@ robot.setMouseDelay(2)
 } */
 
 module.exports = {
-  cam
+  cam,
+  approach,
+  reset,
+  unlock,
+  first,
+  next
 }

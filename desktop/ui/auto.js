@@ -1,4 +1,4 @@
-const url = window.location.hostname === 'localhost' ? 'ws://localhost:2223' : 'ws://192.168.1.104:2223'
+const url = window.location.hostname === 'localhost' ? 'ws://localhost:2223' : 'ws://192.168.1.127:2223'
 const socket = new WebSocket(url)
 
 const buttons = document.querySelectorAll('button')
