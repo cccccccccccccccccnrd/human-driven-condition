@@ -19,7 +19,8 @@ body {
 }
 
 h2 {
-  font-size: 1em;
+  margin: 0 0 0.25rem 0;
+  font-size: 3em;
   font-weight: normal;
   text-align: center;
 }
