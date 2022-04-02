@@ -19,9 +19,11 @@ function mode (name) {
   switch (name) {
     case 'artistic':
       video.currentTime = 0
+      video.play()
       break
     case 'research':
       video.currentTime = 60
+      video.play()
       break
   }
 }

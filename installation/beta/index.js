@@ -72,9 +72,7 @@ function init () {
     const minutes = now.getMinutes()
     const seconds = now.getSeconds()
 
-    console.log(minutes, seconds)
-
-    if (seconds === 0 && minutes === 0 || seconds === 0 && minutes === 30) {
+    if (seconds === 0 && minutes === 0 || seconds === 0 && minutes === 20) {
       state.mode = 'artistic'
       broadcast(null, 'do', {
         do: state.mode
