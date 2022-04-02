@@ -13,6 +13,10 @@ app.use('/ui/front', express.static(path.join(__dirname, 'ui/front')))
 app.listen(2727)
 console.log('<-- human-driven condition (2021-) INSTALLATION listening on http://localhost:2727 WS listening on :2728')
 
+app.get('/mode', (req, res) => {
+  res.send(state.mode)
+})
+
 const state = {
   devices: {},
   mode: 'artistic'
