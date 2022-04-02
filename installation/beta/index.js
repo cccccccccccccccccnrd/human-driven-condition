@@ -81,7 +81,7 @@ function init () {
       broadcast(null, 'do', {
         do: state.mode
       })
-    } else if (seconds === 0 && minutes === 7 || seconds === 0 && minutes === 50) {
+    } else if (seconds === 0 && minutes === 20 || seconds === 0 && minutes === 50) {
       state.mode = 'research'
       broadcast(null, 'do', {
         do: state.mode
