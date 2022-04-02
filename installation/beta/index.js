@@ -68,16 +68,24 @@ function handleOpen (ws, id) {
 
 function init () {
   setInterval(() => {
-    if (state.mode === 'artistic') {
-      state.mode = 'research'
-    } else {
-      state.mode = 'artistic'
-    }
+    const now = new Date()
+    const minutes = now.getMinutes()
+    const seconds = now.getSeconds()
 
-    broadcast(null, 'do', {
-      do: state.mode
-    })
-  }, 1000 * 10)
+    console.log(minutes, seconds)
+
+    if (seconds === 0 && minutes === 0 || seconds === 0 && minutes === 30) {
+      state.mode = 'artistic'
+      broadcast(null, 'do', {
+        do: state.mode
+      })
+    } else if (seconds === 0 && minutes === 20 || seconds === 0 && minutes === 50) {
+      state.mode = 'research'
+      broadcast(null, 'do', {
+        do: state.mode
+      })
+    }
+  }, 1000 * 1)
 }
 
 init()
