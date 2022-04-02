@@ -25,6 +25,7 @@ function mode (name) {
       break
   }
 
+  /* slower? test different playing methods */
   video.style.opacity = 1
   video.muted = false
 }
@@ -91,4 +92,8 @@ function send (type, payload) {
 
 function init () {
   send('get-state')
+
+  setInterval(() => {
+    send('ping')
+  }, 1000 * 60)
 }
