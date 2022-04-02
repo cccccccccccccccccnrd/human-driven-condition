@@ -1,0 +1,65 @@
+@keyframes swipe-in {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes swipe-out {
+  from {
+    transform: translateY(0%);
+  }
+
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  font-family: 'Arial';
+  font-size: 16px;
+  background: black;
+  color: white;
+}
+
+video {
+  height: 100vh;
+}
+
+#ui {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+#ui > * {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  color: white;
+  background: black;
+  font-size: 1em;
+  animation: 300ms ease-in-out swipe-in;
+}
+
+.swipe-out {
+  animation: 300ms ease-in-out swipe-out !important;
+}

@@ -1,6 +1,6 @@
-const url = window.location.hostname === 'localhost' ? 'ws://localhost:2223' : 'ws://192.168.1.127:2223'
+const url = window.location.hostname === 'localhost' ? 'ws://localhost:2223' : 'ws://192.168.0.131:2223'
 const socket = new WebSocket(url)
-const id = 'A00-CLIENT'
+const id = 'A00-BACK'
 
 const buttons = document.querySelectorAll('button')
 
@@ -17,6 +17,7 @@ socket.addEventListener('message', (message) => {
   switch (msg.type) {
     case 'state':
       state = msg.payload.state
+      console.log(state)
       reloadUi()
       break
   }
@@ -45,8 +46,10 @@ buttons.forEach((button) => {
   button.addEventListener('click', (event) => {
     const id = event.target.id
     console.log(id)
+
     send('do', {
-      do: id
+      do: id,
+      payload: document.querySelector('#input-text').value
     })
     button.classList.toggle('done')
   })
