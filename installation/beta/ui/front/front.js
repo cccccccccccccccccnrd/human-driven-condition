@@ -1,4 +1,4 @@
-const url = window.location.hostname === 'localhost' ? 'ws://localhost:2728' : 'ws://human-driven-condition.cnrd.computer/inst/ws'
+const url = window.location.hostname === 'localhost' ? 'ws://localhost:2728' : 'wss://hdc.cnrd.computer/ws'
 const socket = new WebSocket(url)
 const id = 'A00-FRONT'
 
