@@ -3,9 +3,9 @@ const express = require('express')
 const WebSocket = require('ws')
 
 const app = express()
-const wss = new WebSocket.Server({
+/* const wss = new WebSocket.Server({
   port: 2728
-})
+}) */
 
 /* app.use('/ui/back', express.static(path.join(__dirname, 'ui/back')))
 app.use('/ui/front', express.static(path.join(__dirname, 'ui/front'))) */
@@ -22,7 +22,7 @@ const state = {
   mode: 'artistic'
 }
 
-function send (ws, type, payload) {
+function send(ws, type, payload) {
   const msg = {
     id: 'A00-SERVER',
     type,
@@ -32,7 +32,7 @@ function send (ws, type, payload) {
   ws.send(JSON.stringify(msg))
 }
 
-function broadcast (ws, type, payload) {
+function broadcast(ws, type, payload) {
   wss.clients.forEach((client) => {
     if (client !== ws && client.readyState === WebSocket.OPEN) {
       send(client, type, payload)
@@ -40,7 +40,7 @@ function broadcast (ws, type, payload) {
   })
 }
 
-function handleClose (ws) {
+function handleClose(ws) {
   if (ws.id) {
     console.log(ws.id, 'deleted')
   }
@@ -52,7 +52,7 @@ function handleClose (ws) {
   })
 }
 
-function handleOpen (ws, id) {
+function handleOpen(ws, id) {
   if (state.devices.hasOwnProperty(id)) {
     console.log(id, 'already connected')
     ws.terminate()
@@ -70,29 +70,31 @@ function handleOpen (ws, id) {
   })
 }
 
-function init () {
+function init() {
   setInterval(() => {
     const now = new Date()
     const minutes = now.getMinutes()
     const seconds = now.getSeconds()
 
-    if (seconds === 0 && minutes === 0 || seconds === 0 && minutes === 30) {
+    if ((seconds === 0 && minutes === 0) || (seconds === 0 && minutes === 30)) {
       state.mode = 'artistic'
-      broadcast(null, 'do', {
+      console.log(now, state.mode)
+      /* broadcast(null, 'do', {
         do: state.mode
-      })
-    } else if (seconds === 0 && minutes === 20 || seconds === 0 && minutes === 50) {
+      }) */
+    } else if ((seconds === 0 && minutes === 20) || (seconds === 0 && minutes === 50)) {
       state.mode = 'research'
-      broadcast(null, 'do', {
+      console.log(now, state.mode)
+      /* broadcast(null, 'do', {
         do: state.mode
-      })
+      }) */
     }
   }, 1000 * 1)
 }
 
 init()
 
-wss.on('connection', (ws) => {
+/* wss.on('connection', (ws) => {
   ws.on('message', (message) => {
     const msg = JSON.parse(message)
     console.log(msg)
@@ -102,7 +104,7 @@ wss.on('connection', (ws) => {
         send(ws, 'state', {
           state
         })
-        break 
+        break
       case 'do':
         broadcast(ws, 'do', msg.payload)
         break
@@ -115,4 +117,4 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     handleClose(ws)
   })
-})
+}) */
