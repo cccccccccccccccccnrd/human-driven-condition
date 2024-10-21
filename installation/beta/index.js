@@ -17,6 +17,16 @@ app.get('/mode', (req, res) => {
   res.send(state.mode)
 })
 
+app.get('/c', (req, res) => {
+  if (state.mode === 'artistic') {
+    state.mode = 'research'
+  } else {
+    state.mode = 'artistic'
+  }
+  console.log('CHANGED', state.mode)
+  res.send(state.mode)
+})
+
 const state = {
   devices: {},
   mode: 'artistic'
